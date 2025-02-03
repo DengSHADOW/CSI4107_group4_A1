@@ -31,7 +31,7 @@ def preprocess_text(text):
 # Use map of word --> set of IDs for fast lookup
 def build_index(corpus_file):
     index = {}
-    
+
     
     with open(corpus_file, 'r', encoding='utf-8') as file:
         for line in file:
