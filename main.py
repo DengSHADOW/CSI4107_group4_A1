@@ -13,4 +13,17 @@ for key, value in index.items() :
         print(key, len(value))
 
 
-# 
+# Test queies (query_id: Query) [TODO]
+#   - Use only test queries (the queries with odd numbers 1.3.5, …)
+# Run IR system for test queies
+
+
+
+# Output them with ranks in a file
+#   - Results.txt
+#   - Output form: query_id Q0 doc_id rank score tag
+#   - top-100 results (already included in the code)
+
+
+
+# Evaluation
