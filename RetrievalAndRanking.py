@@ -1,25 +1,41 @@
-import math
-from collections import defaultdict
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+import json
+import numpy as np
 
-def compute_tfidf(index, corpus_size):
-    """
-    Computes TF-IDF scores for terms in the index.
-    
-    Args:
-        index (dict): Inverted index with term -> set of document IDs.
-        corpus_size (int): Total number of documents.
-    
-    Returns:
-        dict: TF-IDF scores in the format {term: {doc_id: tf-idf_score}}
-    """
-    tfidf_index = defaultdict(dict)
-    
-    for term, doc_ids in index.items():
-        df = len(doc_ids)  # Document Frequency (DF)
-        idf = math.log(corpus_size / (df + 1))  # Compute IDF (smoothing added)
+# Load and preprocess documents from corpus.jsonl
+def load_corpus(corpus_file):
+    doc_texts = []
+    doc_ids = []
 
-        for doc_id in doc_ids:
-            tf = 1 + math.log(len(doc_ids))  # Log-based TF
-            tfidf_index[term][doc_id] = tf * idf  # Compute TF-IDF
-    
-    return tfidf_index
+    with open(corpus_file, 'r', encoding='utf-8') as file:
+        for line in file:
+            doc = json.loads(line)
+            doc_id = doc["doc_id"]
+            text = doc.get("title", "") + " " + doc.get("text", "")
+            doc_texts.append(text)
+            doc_ids.append(doc_id)
+
+    return doc_texts, doc_ids
+
+# Convert corpus into TF-IDF vectors
+corpus_file = "scifact/corpus.jsonl"
+doc_texts, doc_ids = load_corpus(corpus_file)
+
+vectorizer = TfidfVectorizer(stop_words="english")
+tfidf_matrix = vectorizer.fit_transform(doc_texts)  # Document-term matrix
+
+# Function to search using cosine similarity
+def search_query_tfidf(query_text, top_k=10):
+    query_vec = vectorizer.transform([query_text])  # Convert query to vector
+    similarity_scores = cosine_similarity(query_vec, tfidf_matrix).flatten()  # Compute similarity
+
+    ranked_indices = np.argsort(similarity_scores)[::-1]  # Rank by descending score
+    ranked_results = [(doc_ids[i], similarity_scores[i]) for i in ranked_indices[:top_k]]
+
+    return ranked_results
+
+# Example Query
+query = "scientific research on vaccines"
+results = search_query_tfidf(query)
+print("TF-IDF Results:", results)

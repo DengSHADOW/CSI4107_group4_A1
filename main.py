@@ -1,5 +1,5 @@
 from PreprocessingAndIndexing import preprocess, build_index
-import RetrievalAndRanking
+# import RetrievalAndRanking
 from collections import defaultdict
 
 

@@ -4,7 +4,17 @@ import re
 
 # Preprocess a query by tokenizing, removing punctuation, numbers, stopwords, and extra spaces.
 def preprocess(text, stop_words):
-       
+    """
+    Preprocess the text with stopwords to generate tokens.
+    
+    Args:
+        text (str): A document vocabulary contains title and content.
+        stop_words (list[str]):  List of all stopwords.
+
+    Returns:
+        dict: Inverted index mapping words to sets of document IDs.
+    """   
+
     # Remove HTML tags
     text = re.sub(r'<[^>]+>', ' ', text)
     
@@ -19,6 +29,7 @@ def preprocess(text, stop_words):
     
     return filtered_tokens
 
+
 # Build index: map unique vocab words to documents (IDs) containing them
 # Use map of word --> set of IDs for fast lookup
 def build_index(corpus_file, stop_words):
@@ -27,12 +38,13 @@ def build_index(corpus_file, stop_words):
     
     Args:
         corpus_file (str): Path to the corpus.jsonl file.
-    
+        stop_words (list[str]):  List of all stopwords.
+
     Returns:
         dict: Inverted index mapping words to sets of document IDs.
     """
     
-    # 
+    # Specialized dictionary that automatically initializes missing keys with empty sets (no need to check keys)
     index = defaultdict(set)
     
     with open(corpus_file, 'r', encoding='utf-8') as file:
