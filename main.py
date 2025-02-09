@@ -21,8 +21,10 @@ from IRsystem import IRsystem # import IRsystem class
 # Run IR system for test queries
 
 IR = IRsystem()
-IR.build_index("./scifact/corpus.jsonl")
-IR.save_results("scifact/queries.jsonl", "Results.txt")
+IR.build_index("./scifact/corpus.jsonl", True)
+IR.save_results("scifact/queries.jsonl", "ResultsTitle.txt")
+IR.build_index("./scifact/corpus.jsonl", False)
+IR.save_results("scifact/queries.jsonl", "ResultsAll.txt")
 
 
 

@@ -67,7 +67,7 @@ class IRsystem:
         # Remove stopwords and duplicate tokens
         return [word for word in tokens if word not in self.stop_words]
 
-    def build_index(self, corpus_file):
+    def build_index(self, corpus_file, title_Only):
         """
         Builds an inverted index and stores document texts for retrieval.
 
@@ -81,7 +81,10 @@ class IRsystem:
             for line in file:
                 doc = json.loads(line)
                 doc_id = doc["_id"]
-                text = doc.get("title", "") + " " + doc.get("text", "")
+                if title_Only:
+                    text = doc.get("title", "")
+                else:
+                    text = doc.get("title", "") + " " + doc.get("text", "")
                 
                 # Preprocess text
                 words = self.preprocess(text)
