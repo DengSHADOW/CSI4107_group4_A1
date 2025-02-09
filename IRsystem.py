@@ -62,7 +62,7 @@ class IRsystem:
             list: List of cleaned tokens.
         """
         text = re.sub(r'(<[^>]+>|[^a-zA-Z\s])', ' ', text)  # Remove HTML tags, punctuation, and numbers
-        tokens = set(text.lower().split())  # Tokenize, remove duplicates
+        tokens = text.lower().split()  # Tokenize
 
         # Remove stopwords and duplicate tokens
         return [word for word in tokens if word not in self.stop_words]
