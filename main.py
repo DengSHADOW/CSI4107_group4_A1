@@ -24,29 +24,16 @@ from IRsystem import IRsystem # import IRsystem class
 #     if len(value) > 1500:
 #         print(key, len(value))
 
-# Sample of 100 tokens from your vocabulary. Include the first 10 answers to the first 2 queries. 
 
 # Run system to generate output
 #   - Use only test queries (the queries with odd numbers 1.3.5, …)
-#   - Each query has rank 100 documents in the decending order
-#   - Output Results.txt
-# Run IR system for test queries
+#   - Each query has 100 documents in the decending rank order
+#   - Output Results.txt (and ResultsTitlesOnly.txt for index that excludes document text)
+IR = IRsystem()
+IR.build_index("./scifact/corpus.jsonl", True)
+IR.save_results("scifact/queries.jsonl", "ResultsTitlesOnly.txt")
+IR.build_index("./scifact/corpus.jsonl", False)
+IR.save_results("scifact/queries.jsonl", "Results.txt")
 
-# IR = IRsystem()
-# IR.build_index("./scifact/corpus.jsonl", True)
-# IR.save_results("scifact/queries.jsonl", "ResultsTitle.txt")
-# IR.build_index("./scifact/corpus.jsonl", False)
-# IR.save_results("scifact/queries.jsonl", "ResultsAll.txt")
-
-
-
-# Evaluation
-#   - Include the Mean Average Precision (MAP) score computed with trec_eval for the results on the test queries.  
-
-
-# Sample display (comment it if not use)
-#   - How big was the vocabulary? 
-#   - Include a sample of 100 tokens from your vocabulary. 
-#   - Include the first 10 answers to the first 2 queries. 
-
+# Display sample results
 # IR.display_samples("scifact/queries.jsonl") # default display top 10
