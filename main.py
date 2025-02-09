@@ -1,6 +1,18 @@
 from IRsystem import IRsystem # import IRsystem class
 
 
+# Code to adjust scifact test.tsv to include q0 column
+# input_file = './scifact/qrels/test.tsv'
+# output_file = './scifact/qrels/modified_test.tsv'
+# with open(input_file, 'r') as infile, open(output_file, 'w') as outfile:
+#     for line in infile:
+#         parts = line.strip().split('\t')
+        
+#         if len(parts) == 3:
+#             query_id, corpus_id, score = parts
+#             outfile.write(f"{query_id}\tq0\t{corpus_id}\t{score}\n") 
+
+
 # Example text processing
 # query = "<p>This is an example query, with numbers 123 and punctuation!?!?!</p>"
 # print(IR.preprocess(query))
@@ -20,11 +32,11 @@ from IRsystem import IRsystem # import IRsystem class
 #   - Output Results.txt
 # Run IR system for test queries
 
-IR = IRsystem()
-IR.build_index("./scifact/corpus.jsonl", True)
-IR.save_results("scifact/queries.jsonl", "ResultsTitle.txt")
-IR.build_index("./scifact/corpus.jsonl", False)
-IR.save_results("scifact/queries.jsonl", "ResultsAll.txt")
+# IR = IRsystem()
+# IR.build_index("./scifact/corpus.jsonl", True)
+# IR.save_results("scifact/queries.jsonl", "ResultsTitle.txt")
+# IR.build_index("./scifact/corpus.jsonl", False)
+# IR.save_results("scifact/queries.jsonl", "ResultsAll.txt")
 
 
 

@@ -165,7 +165,7 @@ class IRsystem:
 
                 for rank, (doc_id, score) in enumerate(ranked_docs[:top_k], start=1):
                     out.write(f"{query_id} Q0 {doc_id} {rank} {score:.4f} {tag}\n")
-
+                    
         print(f"Results saved to {output_file}")
 
     def display_samples(self, query_file, top_k=10):
